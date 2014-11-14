@@ -158,7 +158,9 @@ private[sql] object BOOLEAN extends NativeColumnType(BooleanType, 4, 1) {
     buffer.put(if (v) 1.toByte else 0.toByte)
   }
 
-  override def extract(buffer: ByteBuffer) = buffer.get() == 1
+  override def extract(buffer: ByteBuffer) = {
+    if (buffer.get() == 1) true else false
+  }
 
   override def setField(row: MutableRow, ordinal: Int, value: Boolean) {
     row.setBoolean(ordinal, value)
